@@ -12,6 +12,7 @@ const faqs = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-white" style={{ fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
@@ -24,13 +25,32 @@ export default function Home() {
           </svg>
           <span className="text-xl font-extrabold text-gray-900 tracking-tight">SwiftMove</span>
         </div>
+
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-          <Link href="/" className="hover:text-orange-500 transition-colors">Home</Link>
-          <Link href="/booking" className="hover:text-orange-500 transition-colors">Services</Link>
+          <Link href="/" className="text-orange-500 font-bold transition-colors">Home</Link>
+          <Link href="/services" className="hover:text-orange-500 transition-colors">Services</Link>
           <Link href="/tracking" className="hover:text-orange-500 transition-colors">Track Package</Link>
           <Link href="/booking" className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg font-semibold transition-colors text-sm">Book Now</Link>
         </div>
+
+        {/* Mobile Hamburger */}
+        <button className="md:hidden flex flex-col gap-1.5 p-2" onClick={() => setMenuOpen(!menuOpen)}>
+          <span className={`block w-6 h-0.5 bg-gray-800 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`}/>
+          <span className={`block w-6 h-0.5 bg-gray-800 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}/>
+          <span className={`block w-6 h-0.5 bg-gray-800 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}/>
+        </button>
       </nav>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-white border-b border-gray-100 px-6 py-4 flex flex-col gap-4 shadow-lg z-40">
+          <Link href="/" className="text-orange-500 font-bold py-2 border-b border-gray-50" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link href="/services" className="text-gray-700 font-medium hover:text-orange-500 transition-colors py-2 border-b border-gray-50" onClick={() => setMenuOpen(false)}>Services</Link>
+          <Link href="/tracking" className="text-gray-700 font-medium hover:text-orange-500 transition-colors py-2 border-b border-gray-50" onClick={() => setMenuOpen(false)}>Track Package</Link>
+          <Link href="/booking" className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-3 rounded-lg text-center transition-colors" onClick={() => setMenuOpen(false)}>Book Now</Link>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center">
@@ -309,6 +329,7 @@ export default function Home() {
           </div>
           <div className="flex gap-8 text-sm text-gray-400">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <Link href="/services" className="hover:text-white transition-colors">Services</Link>
             <Link href="/booking" className="hover:text-white transition-colors">Book Delivery</Link>
             <Link href="/tracking" className="hover:text-white transition-colors">Track Package</Link>
           </div>
